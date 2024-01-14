@@ -130,15 +130,25 @@ public class Phone extends Product implements IOperation{
     }
     @Override
     public void filterByProductId() {
-        Comparator<Phone> phoneSetId = Comparator.comparingInt(Phone::getId);
-        Collections.sort(phones, phoneSetId);
-        showProductList();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Lütfen ürünün id bilgisini giriniz : ");
+        int id = scanner.nextInt();
+
+        if (phones.contains(findPhoneById(id))){
+            showProduct(findPhoneById(id));
+        }
+        else {
+            System.out.println("Ürün bulunamamıştır.");
+        }
     }
     @Override
     public void filterByProductBrand() {
-        Comparator<Phone> phoneSetName = Comparator.comparing(Phone::getName);
-        Collections.sort(phones, phoneSetName);
-        showProductList();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Lütfen ürünün markasını giriniz : ");
+        String brand = scanner.next().toLowerCase();
+        if (phones.contains(findPhoneByBrand(brand))){
+            showProduct(findPhoneByBrand(brand));
+        }
     }
 
     public int getCamera() {
@@ -171,5 +181,28 @@ public class Phone extends Product implements IOperation{
             }
         }
         return null;
+    }
+    private Phone findPhoneByBrand(String brand){
+        for (Phone phone : phones){
+            if (phone.getBrandName().equals(brand)){
+                return phone;
+            }
+        }
+        return null;
+    }
+    private void showProduct(Phone selected){
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-6s %-22s %-10s %-12s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s%n",
+                "| ID", "| Ürün Adı", "| Fiyat", "| Marka", "| Depolama", "| Camera", "| Ekran", "| RAM", "| Pil", "| Renk", "| Stok", "| İndirim    |");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+        for (Phone phone : phones) {
+            if (phone == selected) {
+                System.out.printf("  %-6s %-22s %-10s %-12s %-10s %-10s %-10s %-10s %-10s %-10s %-10s %-10s%n",
+                        phone.getId(), phone.getName(), phone.getPrice(), phone.getBrandName(),
+                        phone.getMemory(), phone.getCamera(), phone.getScreenSize(), phone.getRam(),
+                        phone.getBatteryCapacity(), phone.getColor(), phone.getStock(), phone.getDiscountRate());
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
+            }
+        }
     }
 }

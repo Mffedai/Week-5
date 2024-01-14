@@ -117,21 +117,38 @@ public class Notebook extends Product implements IOperation{
 
     @Override
     public void filterByProductId() {
-        Comparator<Notebook> notebookSetId = Comparator.comparingInt(Notebook::getId);
-        Collections.sort(notebooks, notebookSetId);
-        showProductList();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Lütfen ürünün id bilgisini giriniz : ");
+        int id = scanner.nextInt();
 
+        if (notebooks.contains(findNotebookById(id))){
+            showProduct(findNotebookById(id));
+        }
+        else {
+            System.out.println("Ürün bulunamamıştır.");
+        }
     }
 
     @Override
     public void filterByProductBrand() {
-        Comparator<Notebook> notebookSetName = Comparator.comparing(Notebook::getName);
-        Collections.sort(notebooks, notebookSetName);
-        showProductList();
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Lütfen ürünün markasını giriniz : ");
+        String brand = scanner.next().toLowerCase();
+        if (notebooks.contains(findNotebookByBrand(brand))){
+            showProduct(findNotebookByBrand(brand));
+        }
     }
     private Notebook findNotebookById(int id){
         for (Notebook notebook : notebooks){
             if (notebook.getId() == id){
+                return notebook;
+            }
+        }
+        return null;
+    }
+    private Notebook findNotebookByBrand(String brand){
+        for (Notebook notebook : notebooks){
+            if (notebook.getBrandName().equals(brand)){
                 return notebook;
             }
         }
@@ -145,6 +162,21 @@ public class Notebook extends Product implements IOperation{
             }
         }
         return count;
+    }
+    private void showProduct(Notebook selected){
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        System.out.printf("%-6s %-22s %-10s %-10s %-12s %-10s %-10s %-10s %-10s%n",
+                "| ID", "| Ürün Adı", "| Fiyat", "| Marka", "| Depolama", "| Ekran", "| RAM", "| Stok", "| İndirim    |");
+        System.out.println("----------------------------------------------------------------------------------------------------------------");
+        for (Notebook notebook : notebooks) {
+            if (notebook == selected) {
+                System.out.printf("  %-6s %-22s %-10s %-10s %-12s %-10s %-10s %-10s %-10s%n",
+                        notebook.getId(), notebook.getName(), notebook.getPrice(), notebook.getBrandName(),
+                        notebook.getMemory(), notebook.getScreenSize(), notebook.getRam(),
+                        notebook.getStock(), notebook.getDiscountRate());
+                System.out.println("----------------------------------------------------------------------------------------------------------------");
+            }
+        }
     }
 
 }

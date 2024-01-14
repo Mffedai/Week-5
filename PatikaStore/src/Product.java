@@ -5,11 +5,11 @@ public abstract class  Product {
     private double discountRate;
     private int stock;
     private String brandName;
-    private String screenSize;
+    private int screenSize;
     private int ram;
-    private String memory;
+    private int memory;
 
-    public Product(int id, String name, double price, double discountRate, int stock, String brandName, String screenSize, int ram, String memory) {
+    public Product(int id, String name, double price, double discountRate, int stock, String brandName, int screenSize, int ram, int memory) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -72,11 +72,11 @@ public abstract class  Product {
         this.brandName = brandName;
     }
 
-    public String getScreenSize() {
+    public int getScreenSize() {
         return screenSize;
     }
 
-    public void setScreenSize(String screenSize) {
+    public void setScreenSize(int screenSize) {
         this.screenSize = screenSize;
     }
 
@@ -88,11 +88,11 @@ public abstract class  Product {
         this.ram = ram;
     }
 
-    public String getMemory() {
+    public int getMemory() {
         return memory;
     }
 
-    public void setMemory(String memory) {
+    public void setMemory(int memory) {
         this.memory = memory;
     }
 }
